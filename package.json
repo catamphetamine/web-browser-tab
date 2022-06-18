@@ -1,0 +1,46 @@
+{
+  "name": "web-browser-tab",
+  "version": "0.1.4",
+  "description": "Web browser tab",
+  "type": "module",
+  "main": "index.js",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js"
+    },
+    "./status-watcher": {
+      "types": "./status-watcher.d.ts",
+      "import": "./status-watcher.js"
+    }
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0"
+  },
+  "scripts": {
+    "test": "node --experimental-json-modules node_modules/mocha/bin/_mocha --require ./test/setup.js --reporter spec --colors --bail --exit --recursive \"./{,!(node_modules)/**/}*.test.js\"",
+    "prepublishOnly": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/catamphetamine/web-browser-tab.git"
+  },
+  "keywords": [
+    "frontend",
+    "storage",
+    "browser"
+  ],
+  "author": "catamphetamine <purecatamphetamine@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/catamphetamine/web-browser-tab/issues"
+  },
+  "homepage": "https://gitlab.com/catamphetamine/web-browser-tab#readme",
+  "dependencies": {
+    "nanoid": "^4.0.0",
+    "web-browser-storage": "^0.1.6",
+    "web-browser-timer": "^0.1.0"
+  }
+}
