@@ -21,7 +21,7 @@ A tab goes "inactive" when:
 
 * The user minimizes the web browser window.
 * The user puts the web browser application into background.
-* The tab looses focus.
+* The tab loses focus.
 * The user refreshes the tab.
 * The user switches to some other tab.
 * The user switches to some other application.
@@ -66,13 +66,13 @@ const storage2 = baseStorage.createSharedInstance('2')
 const timer = new TestTimer()
 
 const tab1 = new TestTab({
-	storage: storage1,
-	timer
+  storage: storage1,
+  timer
 })
 
 const tab2 = new TestTab({
-	storage: storage2,
-	timer
+  storage: storage2,
+  timer
 })
 
 tab1.start()
@@ -81,7 +81,7 @@ tab2.start()
 let activeTabIdPromise1 = tab1.getActiveTabId()
 let activeTabIdPromise2 = tab2.getActiveTabId()
 
-await timer.skip(2000)
+await timer.next()
 
 await activeTabIdPromise1 === undefined
 await activeTabIdPromise2 === undefined
@@ -91,7 +91,7 @@ tab1.setActive(true)
 activeTabIdPromise1 = tab1.getActiveTabId()
 activeTabIdPromise2 = tab2.getActiveTabId()
 
-await timer.skip(2000)
+await timer.next()
 
 await activeTabIdPromise1 === tab1.getId()
 await activeTabIdPromise2 === tab1.getId()
@@ -147,23 +147,23 @@ import { Lock } from 'web-browser-tab'
 const lock = new Lock('LockName', { timeout: 60 * 1000 })
 
 const {
-	retryAfter,
-	releaseLock,
-	hasLockTimedOut,
-	getRetryDelayAfterLockTimedOut
+  retryAfter,
+  releaseLock,
+  hasLockTimedOut,
+  getRetryDelayAfterLockTimedOut
 } = await lock.acquire()
 
 // If the lock hasn't been acquired, `retryAfter` property will be present
 // and it will be `> 0`.
 if (retryAfter) {
-	return console.log(`Couldn't lock. Can retry after ${retryAfter}ms`)
+  return console.log(`Couldn't lock. Can retry after ${retryAfter}ms`)
 }
 
 // Do some stuff.
 await doSomeStuff()
 
 if (hasLockTimedOut()) {
-	return console.log(`Lock timed out. Can retry after ${getRetryDelayAfterLockTimedOut()}ms`)
+  return console.log(`Lock timed out. Can retry after ${getRetryDelayAfterLockTimedOut()}ms`)
 }
 
 // Do some more stuff.
@@ -186,14 +186,14 @@ const baseStorage = new MemoryStorage()
 const storage1 = baseStorage.createSharedInstance('1')
 
 const lock = new Lock('LockName', {
-	timeout: 60 * 1000,
-	timer: new TestTimer(),
-	storage: storage1
+  timeout: 60 * 1000,
+  timer: new TestTimer(),
+  storage: storage1
 })
 
 const {
-	retryAfter,
-	releaseLock
+  retryAfter,
+  releaseLock
 } = await lock.acquire()
 ```
 

@@ -1,6 +1,6 @@
 {
   "name": "web-browser-tab",
-  "version": "0.1.4",
+  "version": "0.1.7",
   "description": "Web browser tab",
   "type": "module",
   "main": "index.js",
@@ -41,6 +41,6 @@
   "dependencies": {
     "nanoid": "^4.0.0",
     "web-browser-storage": "^0.1.6",
-    "web-browser-timer": "^0.1.0"
+    "web-browser-timer": "^0.1.4"
   }
 }
