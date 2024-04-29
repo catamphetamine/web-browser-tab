@@ -7,13 +7,13 @@ interface TabConstructorParametersRest {
 	tabStatusWatcher?: ITabStatusWatcher;
 }
 
-interface TabConstructorParameters extends TabConstructorParametersRest {
-	storage?: Storage;
+interface TabConstructorParameters<StorageValue> extends TabConstructorParametersRest {
+	storage?: Storage<StorageValue>;
 	timer?: ITimer;
 }
 
-interface TestTabConstructorParameters extends TabConstructorParametersRest {
-	storage: Storage;
+interface TestTabConstructorParameters<StorageValue> extends TabConstructorParametersRest {
+	storage: Storage<StorageValue>;
 	timer: ITimer;
 }
 
@@ -27,12 +27,12 @@ export interface ITab {
 
 interface Tab extends ITab {}
 export class Tab {
-	constructor(parameters?: TabConstructorParameters);
+	constructor(parameters?: TabConstructorParameters<StorageValue>);
 }
 
 interface TestTab extends Tab {}
 export class TestTab {
-	constructor(parameters?: TestTabConstructorParameters);
+	constructor(parameters?: TestTabConstructorParameters<StorageValue>);
 }
 
 //-----------------------------------
@@ -52,14 +52,14 @@ export interface ILock {
 	acquire(): Promise<LockSuccess | LockFail>;
 }
 
-interface LockConstructorParameters {
+interface LockConstructorParameters<StorageValue> {
 	timeout: number;
 	timer?: ITimer;
-	storage?: Storage;
+	storage?: Storage<StorageValue>;
 	log?: (...args: any[]) => void;
 }
 
 interface Lock extends ILock {}
 export class Lock {
-	constructor(name: string, parameters: LockConstructorParameters)
+	constructor(name: string, parameters: LockConstructorParameters<StorageValue>)
 }
