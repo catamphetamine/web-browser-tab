@@ -1,6 +1,6 @@
 import { Storage } from 'web-browser-storage'
 import { ITimer } from 'web-browser-timer'
-import { ITabStatusWatcher } from './status-watcher'
+import { ITabStatusWatcher } from './status-watcher.d.js'
 
 interface TabConstructorParametersRest {
 	log?: (...args: any[]) => void;
@@ -22,7 +22,7 @@ export interface ITab {
 	stop(): void;
 	getId(): string;
 	isActive(): boolean;
-	async getActiveTabId(): string | undefined;
+	getActiveTabId(): Promise<string | undefined>;
 }
 
 interface Tab extends ITab {}
@@ -37,20 +37,19 @@ export class TestTab {
 
 //-----------------------------------
 
-interface LockSuccessResult {
+export class LockSuccess {
 	releaseLock: () => void;
 	hasLockTimedOut: () => boolean;
 	getRetryDelayAfterLockTimedOut: () => number;
 }
 
-interface LockFailedResult {
+export class LockFail {
+	code: 'LOCK_ACQUIRED_BY_CONCURRENT_PROCESS' | 'LOCK_OVERWRITTEN_BY_CONCURRENT_PROCESS';
 	retryAfter: number;
 }
 
-type LockResult = LockSuccessResult | LockFailedResult;
-
 export interface ILock {
-	async acquire(): LockResult;
+	acquire(): Promise<LockSuccess | LockFail>;
 }
 
 interface LockConstructorParameters {
@@ -62,5 +61,5 @@ interface LockConstructorParameters {
 
 interface Lock extends ILock {}
 export class Lock {
-	constructor(name: string, LockConstructorParameters)
+	constructor(name: string, parameters: LockConstructorParameters)
 }
