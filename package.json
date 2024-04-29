@@ -1,6 +1,6 @@
 {
   "name": "web-browser-tab",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "description": "Web browser tab",
   "type": "module",
   "main": "index.js",

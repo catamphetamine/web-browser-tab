@@ -142,22 +142,24 @@ tabStatusWatcher.setActive(false)
 #### Browser
 
 ```js
-import { Lock } from 'web-browser-tab'
+import { Lock, LockSuccess, LockFail } from 'web-browser-tab'
 
 const lock = new Lock('LockName', { timeout: 60 * 1000 })
 
+const lockResult = await lock.acquire()
+
+if (lockResult instanceof LockFail) {
+  // If the lock hasn't been acquired, `retryAfter` property will be present
+  // and it will be `> 0`.
+  const { retryAfter } = lockResult
+  return console.log(`Couldn't lock. Can retry after ${retryAfter}ms`)
+}
+
 const {
-  retryAfter,
   releaseLock,
   hasLockTimedOut,
   getRetryDelayAfterLockTimedOut
-} = await lock.acquire()
-
-// If the lock hasn't been acquired, `retryAfter` property will be present
-// and it will be `> 0`.
-if (retryAfter) {
-  return console.log(`Couldn't lock. Can retry after ${retryAfter}ms`)
-}
+} = lockResult
 
 // Do some stuff.
 await doSomeStuff()
